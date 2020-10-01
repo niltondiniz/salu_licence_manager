@@ -20,7 +20,7 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: Modular.navigatorKey,
-      title: 'Flutter Slidy',
+      title: 'Salu Manager',
       theme: ThemeData(
         primarySwatch: appBarColor,
       ),

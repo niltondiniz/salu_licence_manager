@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:salu_licence_manager/app/modules/user/user/user_page.dart';
+
 import 'package:salu_licence_manager/shared/repositories/client_repository.dart';
 import 'package:salu_licence_manager/shared/util/consts.dart';
 

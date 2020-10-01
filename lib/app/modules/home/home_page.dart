@@ -18,35 +18,41 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   @override
   void initState() {
     controller.getAllClients();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: TextStyle(color: Colors.white),
+        title: Center(
+          child: Text(
+            widget.title,
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         leading: Image.asset("assets/images/salu.jpeg"),
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          children: <Widget>[
-            Observer(
-              builder: (_) {
-                if (controller.clients.error != null) {
-                  return Center(child: Text('Erro ao buscar dados'));
-                }
-                if (controller.clients.value == null) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  List<ClientModel> list = controller.clients.value;
+      body: Column(
+        children: [
+          Observer(
+            builder: (_) {
+              if (controller.clients.error != null) {
+                return Center(child: Text('Erro ao buscar dados'));
+              }
+              if (controller.clients.value == null) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                List<ClientModel> list = controller.clients.value;
 
-                  return Expanded(
+                return Expanded(
+                  child: RefreshIndicator(
+                    // ignore: missing_return
+                    onRefresh: () {
+                      controller.getAllClients();
+                    },
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
@@ -126,7 +132,10 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                               title: Text(
                                 list[index].nome,
                                 style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                               subtitle: Text(list[index].cnpj == null
                                   ? "[Dados não definidos]"
@@ -149,12 +158,12 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                         );
                       },
                     ),
-                  );
-                }
-              },
-            ),
-          ],
-        ),
+                  ),
+                );
+              }
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
