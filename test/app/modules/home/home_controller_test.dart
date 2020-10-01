@@ -1,4 +1,3 @@
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:salu_licence_manager/app/app_module.dart';
@@ -11,7 +10,7 @@ void main() {
   initModule(AppModule());
   initModule(HomeModule());
   HomeController home;
-  List<ClientModel> clients = [];
+
   //
   setUp(() {
     home = HomeModule.to.get<HomeController>();

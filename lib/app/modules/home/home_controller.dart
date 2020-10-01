@@ -20,7 +20,8 @@ abstract class _HomeControllerBase with Store {
   _HomeControllerBase(this.repository);
 
   @action
-  void getAllClients() {
+  // ignore: missing_return
+  Future<void> getAllClients() {
     clients = repository.getAll().asObservable();
   }
 

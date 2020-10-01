@@ -5,6 +5,7 @@ import 'package:salu_licence_manager/app/modules/home/home_controller.dart';
 import 'package:salu_licence_manager/shared/models/client_model.dart';
 import 'package:salu_licence_manager/shared/util/consts.dart';
 import 'package:salu_licence_manager/shared/util/functions.dart';
+import 'package:share/share.dart';
 import 'user_controller.dart';
 
 class UserPage extends StatefulWidget {
@@ -33,13 +34,12 @@ class _UserPageState extends ModularState<UserPage, UserController> {
 
   @override
   void initState() {
+    super.initState();
     try {
       nIndex = int.parse(widget.index);
     } catch (e) {
       nIndex = null;
     }
-
-    List<ClientModel> list = homeController.clients.value;
 
     if (nIndex == null) {
       controller.actualClient = ClientModel();
@@ -90,6 +90,7 @@ class _UserPageState extends ModularState<UserPage, UserController> {
                         keyboardType: TextInputType.name,
                         initialValue: controller.actualClient.nome,
                         decoration: InputDecoration(labelText: 'Nome'),
+                        // ignore: missing_return
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Insira o Nome do Cliente';
@@ -103,6 +104,7 @@ class _UserPageState extends ModularState<UserPage, UserController> {
                         controller: cnpjController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(labelText: 'CNPJ'),
+                        // ignore: missing_return
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Insira o CNPJ do Cliente';
@@ -115,6 +117,7 @@ class _UserPageState extends ModularState<UserPage, UserController> {
                         keyboardType: TextInputType.emailAddress,
                         initialValue: controller.actualClient.email,
                         decoration: InputDecoration(labelText: 'E-mail'),
+                        // ignore: missing_return
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Insira o E-Mail do Cliente';
@@ -130,6 +133,7 @@ class _UserPageState extends ModularState<UserPage, UserController> {
                                 ? controller.actualClient.valorMensal.toString()
                                 : "0,00",
                         decoration: InputDecoration(labelText: 'Valor Mensal'),
+                        // ignore: missing_return
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Insira o Valor Mensal do Cliente';
@@ -152,6 +156,7 @@ class _UserPageState extends ModularState<UserPage, UserController> {
                                 controller: qtdDiasController,
                                 decoration:
                                     InputDecoration(labelText: 'Dias Ativação'),
+                                // ignore: missing_return
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return '';
@@ -161,19 +166,31 @@ class _UserPageState extends ModularState<UserPage, UserController> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: IconButton(
-                                onPressed: () {
-                                  chaveController.text = getChave(
-                                      int.parse(qtdDiasController.text),
-                                      CHAVE_LICENCA,
-                                      cnpjController.text
-                                          .replaceAll(".", "")
-                                          .replaceAll("/", "")
-                                          .replaceAll("-", ""));
-                                },
-                                icon: Icon(Icons.refresh),
-                                color: Color(0xFF29B6CE),
-                                iconSize: 40,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      chaveController.text = getChave(
+                                          int.parse(qtdDiasController.text),
+                                          CHAVE_LICENCA,
+                                          cnpjController.text
+                                              .replaceAll(".", "")
+                                              .replaceAll("/", "")
+                                              .replaceAll("-", ""));
+                                    },
+                                    icon: Icon(Icons.refresh),
+                                    color: Colors.black45,
+                                    iconSize: 40,
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      await Share.share(cnpjController.text);
+                                    },
+                                    icon: Icon(Icons.share),
+                                    color: Colors.black45,
+                                    iconSize: 40,
+                                  ),
+                                ],
                               ),
                             )
                           ],
@@ -187,6 +204,7 @@ class _UserPageState extends ModularState<UserPage, UserController> {
                         decoration: InputDecoration(
                           labelText: 'Chave Ativacao',
                         ),
+                        // ignore: missing_return
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Insira o Valor Mensal do Cliente';

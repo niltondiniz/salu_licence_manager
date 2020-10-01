@@ -25,6 +25,7 @@ class ClientRepository implements IRepository {
 
   @override
   void dispose() {
+    // ignore: todo
     // TODO: implement dispose
   }
 
