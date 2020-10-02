@@ -184,7 +184,8 @@ class _UserPageState extends ModularState<UserPage, UserController> {
                                   ),
                                   IconButton(
                                     onPressed: () async {
-                                      await Share.share(cnpjController.text);
+                                      await Share.share(
+                                          "Insira esta chave no Salu Store: ${chaveController.text}");
                                     },
                                     icon: Icon(Icons.share),
                                     color: Colors.black45,
